@@ -1,0 +1,11 @@
+import pandas as pd
+
+url = 'https://raw.githubusercontent.com/BrayanSSantiago/Trabalho-de-python/e2157c9e6ba5e34f45cdb8ca600571ec19be62f4/cursos-prouni.csv.csv'
+df = pd.read_csv(url)
+
+# Criação do data frame com a correção de todas os numeros pra 0.0
+colunas_notas = ['nota_integral_ampla', 'nota_integral_cotas', 'nota_parcial_ampla', 'nota_parcial_cotas', 'bolsa_integral_cotas', 'bolsa_integral_ampla', 'bolsa_parcial_cotas', 'bolsa_parcial_ampla']
+df[colunas_notas] = df[colunas_notas].fillna(0.0)
+
+#exibir o dataframe
+print(df.head())
