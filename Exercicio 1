@@ -1,0 +1,123 @@
+
+                                                                Exercício nota final tópicos de big date em python
+                                                              
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+1. Obtenha o dataset do endereço https://www.w3resource.com/python exercises/pandas/filter/world_alcohol.csv e realize as seguintes análises (2,5 pontos):
+
+
+1.A_ Agrupe os dados por tipo de bebidas
+import pandas as pd
+
+df = pd.read_csv('/content/world_alcohol.csv')
+
+#Agrupando os dados com o tipo de bebida
+grupo_bebidas = df.groupby('Beverage Types')
+
+
+#exbindo o agrupamento
+for bebidas, grupo in grupo_bebidas:
+    print(f"Tipo de Bebida: {bebidas}")
+    print(grupo)
+    print()
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+1.B_Agrupe os dados por Região e por Ano
+
+import pandas as pd
+
+df = pd.read_csv('/content/world_alcohol.csv')
+
+#Agrupando os dados de regiões e anos
+grupo_Regioes_ano = df.groupby(['WHO region', 'Year'])
+
+#exibindo os dados de regioes e anos
+for (Regioes, ano), grupo in grupo_Regioes_ano:
+    print(f"Ano:{ano} e Regiões: {Regioes}")
+    print(grupo)
+    print()
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+1.C_Seção de Contagens: Contar a ocorrência de Regiões, de Países e a soma da coluna de valores por Bebida.
+
+
+import pandas as pd
+
+df = pd.read_csv('/content/world_alcohol.csv')
+
+#contando a quantidade de ocorrencia de regioes tem o arquivo
+Contagem_Region = df['WHO region'].value_counts()
+
+#contando a quantidade de ocorrencia de países tem o arquivo
+Contagem_Country = df['Country'].value_counts()
+
+#exibindo a quantidade de ocorrencias com regioes
+print("Quantidade de ocorrência com regioes:")
+print(Contagem_Region)
+print()
+
+#exibindo a quantidade de ocorrencias com paises
+print("quantidade de ocorrencias com paises:")
+print(Contagem_Country)
+
+
+#soma dos valores por bebida do arquivo
+soma_valores_por_bebida = df.groupby('Beverage Types')['Display Value'].sum()
+
+#exibindo a soma
+print("Soma de valores por bebida:")
+print(soma_valores_por_bebida)
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+1.D_Realize análises estatísticas da coluna dos valores: Média, Moda, Mediana, Estatística Descritiva e Gráfico de comparação dos valores agrupados por tipo de bebida.
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('/content/world_alcohol.csv')
+
+#realizando a analise das estatísticas da coluna display value
+analises_de_estatiticas = df.groupby('Beverage Types')['Display Value'].agg(['mean', lambda x: x.mode().iat[0], 'median', 'describe'])
+
+#mudando o nome da função do lambda para indicar a moda
+analises_de_estatisticas.rename(columns={ '<lambda_0>': 'mode' }, inplace=True)
+
+#exibindo as estatisticas
+print("Análises Estatísticas:")
+print(analises_de_estatisticas)
+print()
+
+#agrupando dados dos tipos de bebida e somando eles os valores
+grupo_bebida = df.groupby('Beverage Types')
+valores_agrupados = grupo_bebida['Display Value'].sum()
+
+#graficos
+plt.bar(valores_agrupados.index, valores_agrupados.values)
+plt.xlabel('Tipo de Bebida')
+plt.ylabel('Soma dos Valores')
+plt.title('Comparação dos Valores Agrupados por Tipo de Bebida')
+plt.xticks(rotation=90)
+plt.show()
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+1.E_ Mostre resultados de acordo com alguns critérios: i. Mostrar a coluna de bebidas do ano de 1985. ii. Mostrar a coluna de Região com valores acima de 4
+import pandas as pd
+
+df = pd.read_csv('/content/world_alcohol.csv')
+
+#agrupando os dados da coluna do tipo de bebida em um ano especifico
+Bebidas_de_1985 = df[df['Year'] == 1985]['Beverage Types']
+print("Coluna de Bebidas do ano de 1985:")
+print(bebidas_de_1985)
+print()
+
+#Criando um data frame das regiões e filtrando com só regiões com valor acima de 4
+regioes_acima_de_4 = df[df['Display Value'] > 4]['WHO region']
+print("Coluna com Regiões ")
+print(regioes_acima_de_4)
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
