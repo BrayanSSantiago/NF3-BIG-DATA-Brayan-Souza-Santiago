@@ -1,0 +1,211 @@
+2.a_Efetuar a limpeza das colunas de notas: onde tiver NaN (Not a Number), substituir por 0,0
+
+R:
+
+import pandas as pd
+
+
+url = 'https://raw.githubusercontent.com/BrayanSSantiago/Trabalho-de-python/e2157c9e6ba5e34f45cdb8ca600571ec19be62f4/cursos-prouni.csv.csv'
+df = pd.read_csv(url)
+
+
+colunas_notas = ['nota_integral_ampla', 'nota_integral_cotas', 'nota_parcial_ampla', 'nota_parcial_cotas', 'bolsa_integral_cotas', 'bolsa_integral_ampla', 'bolsa_parcial_cotas', 'bolsa_parcial_ampla']
+df[colunas_notas] = df[colunas_notas].fillna(0.0)
+
+
+print(df.head())
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+2.b_Agrupe os dados pelo grau (Bacharelado, Licenciatura, etc).
+
+R:
+
+import pandas as pd
+
+#lendo o arquivo no github
+url = 'https://raw.githubusercontent.com/BrayanSSantiago/Trabalho-de-python/e2157c9e6ba5e34f45cdb8ca600571ec19be62f4/cursos-prouni.csv.csv'
+df = pd.read_csv(url)
+
+# Agrupando pela coluna curso_busca
+grupos_grau = df.groupby('curso_busca')
+
+# Exibir os grupos
+for grau, grupos in grupos_grau:
+    print(f"Grau: {grau}")
+    print(grau)
+    print()
+    
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+ 2.c
+ 
+ R:
+ 
+ import pandas as pd
+
+
+url = 'https://raw.githubusercontent.com/BrayanSSantiago/Trabalho-de-python/e2157c9e6ba5e34f45cdb8ca600571ec19be62f4/cursos-prouni.csv.csv'
+df = pd.read_csv(url)
+
+# Filtrar os cursos
+cursos_escolhidos = ['Matemática', 'Medicina', 'Pedagogia']
+df_cursos_escolhidos = df[df['curso_busca'].isin(cursos_escolhidos)]
+
+# Agrupar os dados dos cursos
+grupos = df_cursos_escolhidos.groupby('curso_busca')
+
+# Exibir os cursos escolhidos
+for curso, escolhidos in grupos:
+    print(f"Curso: {curso}")
+    print(escolhidos)
+    print()
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ 2.d
+ 
+ R:
+ 
+ import pandas as pd
+
+
+url = 'https://raw.githubusercontent.com/BrayanSSantiago/Trabalho-de-python/e2157c9e6ba5e34f45cdb8ca600571ec19be62f4/cursos-prouni.csv.csv'
+df = pd.read_csv(url)
+
+# Agrupar os dados por Estado e calcular a média das notas de corte
+media_notas_por_estado = df.groupby('uf_busca')['nota_integral_cotas'].mean()
+
+# Exibir a média das notas de corte por Estado
+print(media_notas_por_estado)
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+2.e
+
+R:
+
+import pandas as pd
+
+
+url = 'https://raw.githubusercontent.com/BrayanSSantiago/Trabalho-de-python/e2157c9e6ba5e34f45cdb8ca600571ec19be62f4/cursos-prouni.csv.csv'
+df = pd.read_csv(url)
+# Filtrar os cursos Tecnológicos
+df_tecnologicos = df[df['grau'] == 'Tecnológico']
+
+# Agrupar os dados pelos cursos Tecnológicos
+grupos_cursos = df_tecnologicos.groupby('curso_busca')
+
+# Exibir os grupos
+for curso, cursos in grupos:
+    print(f"Curso: {curso}")
+    print(cursos)
+    print()
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+2.f
+
+R:
+
+import pandas as pd
+
+
+url = 'https://raw.githubusercontent.com/BrayanSSantiago/Trabalho-de-python/e2157c9e6ba5e34f45cdb8ca600571ec19be62f4/cursos-prouni.csv.csv'
+df = pd.read_csv(url)
+# Eliminar a coluna 
+df = df.drop('cidade_filtro', axis=1)
+
+# Exibir o dataframe
+print(df.head())
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+2.g
+
+R:
+
+import pandas as pd
+
+
+url = 'https://raw.githubusercontent.com/BrayanSSantiago/Trabalho-de-python/e2157c9e6ba5e34f45cdb8ca600571ec19be62f4/cursos-prouni.csv.csv'
+df = pd.read_csv(url)
+# Filtrar o curso de medicina inteiro
+df_medicina = df[df['curso_busca'] == 'Medicina']
+
+# Calcular a média do preço da mensalidade
+media_preço = df_medicina['mensalidade'].mean()
+
+# Exibir a média do preço da mensalidade
+print("Média das mensalidades dos cursos de Medicina:", media_preço)
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+2.h
+
+R:
+
+import pandas as pd
+
+
+url = 'https://raw.githubusercontent.com/BrayanSSantiago/Trabalho-de-python/e2157c9e6ba5e34f45cdb8ca600571ec19be62f4/cursos-prouni.csv.csv'
+df = pd.read_csv(url)
+# Filtrar os cursos em tempo integral
+df_turno_integral = df[df['turno'] == 'Integral']
+
+# Calculo da media do turno integral
+media_notas = df_turno_integral[['nota_integral_ampla', 'nota_integral_cotas']].mean()
+
+# Exibir a nota de corte dos cursos integrais
+print("Média das notas de corte dos cursos em tempo integral:")
+print(media_notas)
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+2.i
+
+R:
+
+import pandas as pd
+
+
+url = 'https://raw.githubusercontent.com/BrayanSSantiago/Trabalho-de-python/e2157c9e6ba5e34f45cdb8ca600571ec19be62f4/cursos-prouni.csv.csv'
+df = pd.read_csv(url)
+# Filtrar os bacharelados
+df_bach = df[df['grau'] == 'Bacharelado']
+
+# Calcular a estatística descritiva das notas da ampla concorrencia
+estatisticas_descr = df_bach['nota_integral_ampla'].describe()
+
+# Exibir a estatística descritiva das notas da ampla concorrencia
+print("Estatística Descritiva das Notas de Corte dos cursos de Bacharelado (Ampla Concorrência):")
+print(estatisticas_descr)
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+2.j
+
+R:
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+url = 'https://raw.githubusercontent.com/BrayanSSantiago/Trabalho-de-python/e2157c9e6ba5e34f45cdb8ca600571ec19be62f4/cursos-prouni.csv.csv'
+df = pd.read_csv(url)
+# Agrupar os dados por grau e calcular a media
+grupo_grau = df.groupby('grau')['nota_integral_cotas'].mean()
+
+# Criar o grafico
+plt.bar(grupo_grau.index, grupo_grau.values)
+
+# Definir os rótulos dos eixos
+plt.xlabel('Grau dos cursos')
+plt.ylabel('Média das notas de corte (Integral de Cotas)')
+
+# Definir o título do gráfico
+plt.title('Comparação das Notas de Corte por Grau dos cursos')
+
+# Exibir o gráfico
+plt.show()
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
